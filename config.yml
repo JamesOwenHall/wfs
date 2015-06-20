@@ -1,0 +1,4 @@
+shell: bash
+paths:
+  path/to/file:
+    change: echo hello world
