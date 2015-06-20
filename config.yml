@@ -1,4 +1,7 @@
 shell: bash
-paths:
-  path/to/file:
-    change: echo hello world
+files:
+  - path: path/to/file
+    name: "*.txt"
+    create: echo Created a text file
+    change: echo Changed a text file
+    delete: echo Deleted a text file

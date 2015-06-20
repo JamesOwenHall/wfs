@@ -1,14 +1,17 @@
 package main
 
 import (
-	"fmt"
+	"log"
 )
 
+func init() {
+	log.SetFlags(0)
+	log.SetPrefix("error: ")
+}
+
 func main() {
-	c, err := ReadConfig("config.yml")
+	_, err := ReadConfig("config.yml")
 	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Println(c)
+		log.Fatalln(err)
 	}
 }
