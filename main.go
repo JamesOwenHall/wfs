@@ -18,7 +18,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	c, err := ReadConfig(flag.Arg(0))
+	c, err := ReadConfigFile(flag.Arg(0))
 	if err != nil {
 		log.Fatalln("error:", err)
 	}
