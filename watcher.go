@@ -16,7 +16,8 @@ type Watcher struct {
 	Out    io.Writer
 }
 
-// Watch starts watching.  This function blocks.
+// Watch starts watching for the files defined in w.Config and runs the
+// appropriate commands when events occur.  This function blocks.
 func (w *Watcher) Watch() {
 	logger := log.New(w.Out, "", 0)
 
@@ -45,6 +46,7 @@ func (w *Watcher) Watch() {
 	}
 }
 
+// handleEvent runs the appropriate command based on the event path and type.
 func (w *Watcher) handleEvent(ev *inotify.Event) {
 	evDir := filepath.Dir(ev.Name)
 	name := filepath.Base(ev.Name)
@@ -74,6 +76,14 @@ func (w *Watcher) handleEvent(ev *inotify.Event) {
 	}
 }
 
+// getEnv returns the environment variables to be passed to the running
+// command.  These are the same as the ones for wfs, with the following added:
+// - $path: the absolute path to the affected file.
+// - $dir: the absolute path to the affected file's parent directory.
+// - $dirname: like $dir, but only includes the directory's name, not its path.
+// - $filename: the name of the affected file, without its path.
+// - $fileradical: like $filename, but without the file extension.
+// - $fileext: only the file extension of the affected file (including the dot).
 func getEnv(file File, ev *inotify.Event) []string {
 	env := os.Environ()
 	wd, _ := os.Getwd()

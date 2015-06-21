@@ -7,11 +7,18 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// Config is an internal representation of a configuration file.  Shell is
+// the application that gets run when an event occurs.
 type Config struct {
 	Shell string
 	Files []File
 }
 
+// File is an internal representation of a category of files on disk to watch.
+// Path is the directory to watch, while Name is the search pattern for files
+// within the Path.  Create, Change and Delete are the commands that are run
+// whenever a file that matches the Path and Name is created, changed or
+// deleted, respectively.
 type File struct {
 	Path   string
 	Name   string
@@ -20,6 +27,8 @@ type File struct {
 	Delete string
 }
 
+// ReadConfig reads the configuration file and returns the *Config that
+// represents it, or an error if there's a problem parsing the file.
 func ReadConfig(filename string) (*Config, error) {
 	file, err := ioutil.ReadFile(filename)
 	if err != nil {

@@ -1,3 +1,4 @@
+// wfs watches the filesystem for changes and automatically runs commands.
 package main
 
 import (
