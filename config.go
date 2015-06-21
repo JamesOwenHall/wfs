@@ -2,6 +2,7 @@ package main
 
 import (
 	"io/ioutil"
+	"path/filepath"
 
 	"gopkg.in/yaml.v2"
 )
@@ -27,6 +28,11 @@ func ReadConfig(filename string) (*Config, error) {
 
 	config := new(Config)
 	err = yaml.Unmarshal(file, config)
+
+	// We only deal with clean paths.
+	for _, file := range config.Files {
+		file.Path = filepath.Clean(file.Path)
+	}
 
 	return config, err
 }

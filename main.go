@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
 )
 
 func init() {
@@ -10,8 +12,12 @@ func init() {
 }
 
 func main() {
-	_, err := ReadConfig("config.yml")
+	c, err := ReadConfig("config.yml")
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	fmt.Println("Watching...")
+	watcher := &Watcher{Config: c, Out: os.Stderr}
+	watcher.Watch()
 }

@@ -1,6 +1,6 @@
 shell: bash
 files:
-  - path: path/to/file
+  - path: .
     name: "*.txt"
     create: echo Created a text file
     change: echo Changed a text file
