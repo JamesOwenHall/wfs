@@ -7,12 +7,22 @@ import (
 	"os"
 )
 
+const Version = "0.1.0"
+
 func init() {
 	log.SetFlags(0)
 }
 
 func main() {
+	version := flag.Bool("version", false, "Show the version number.")
 	flag.Parse()
+
+	if *version == true {
+		log.Println("wfs version", Version)
+		log.Println("Copyright (c) 2015 James Hall")
+		os.Exit(0)
+	}
+
 	if flag.NArg() != 1 {
 		printUsage()
 		os.Exit(1)
