@@ -2,6 +2,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"os"
 )
@@ -11,7 +12,13 @@ func init() {
 }
 
 func main() {
-	c, err := ReadConfig("config.yml")
+	flag.Parse()
+	if flag.NArg() != 1 {
+		printUsage()
+		os.Exit(1)
+	}
+
+	c, err := ReadConfig(flag.Arg(0))
 	if err != nil {
 		log.Fatalln("error:", err)
 	}
@@ -19,4 +26,8 @@ func main() {
 	log.Println("Watching...")
 	watcher := &Watcher{Config: c, Out: os.Stderr}
 	watcher.Watch()
+}
+
+func printUsage() {
+	log.Println("Usage: wfs [filename]")
 }
