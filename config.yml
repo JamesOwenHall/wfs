@@ -2,6 +2,6 @@ shell: bash
 files:
   - path: .
     name: "*.txt"
-    create: echo Created a text file
-    change: echo Changed a text file
-    delete: echo Deleted a text file
+    create: echo Created a file $filename >> out.log
+    change: echo Changed a file $filename >> out.log
+    delete: echo Deleted a file $filename >> out.log
